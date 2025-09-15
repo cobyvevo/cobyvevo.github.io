@@ -206,6 +206,7 @@
 	    <div class="progress-bar"></div>
 	  </div>
 	  <div class="progress-text">0%</div>
+	  <div style="font-size: 0.7rem; font-weight: 600; color: #888888">(This progress is of the checkboxes and not accurate to the completion of the project)</div>
 	</div>
 
 	<div class="card">
@@ -527,7 +528,7 @@
     const percent = checkboxes.length ? Math.round((checked / checkboxes.length) * 100) : 0;
 
     document.querySelector('.progress-bar').style.width = percent + '%';
-    document.querySelector('.progress-text').textContent = "Hedgerows 2 is " + percent + '% complete (' + checked + " / " + checkboxes.length + " total tasks) ";
+    document.querySelector('.progress-text').textContent =  percent + '% (' + checked + " / " + checkboxes.length + " total tasks) ";
   }
 
   // Initialize on page load

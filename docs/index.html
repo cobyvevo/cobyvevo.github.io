@@ -10,8 +10,45 @@
   <meta property="og:url" content="https://cobyvevo.github.io/" />
   <meta property="og:image" content="https://pbs.twimg.com/media/GxibACYWcAAL4Oq?format=jpg&name=4096x4096" />
 
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
   <style>
+		* {
+		  font-family: "Jost", sans-serif;
+		  font-optical-sizing: auto;
+		  font-weight: <weight>;
+		  font-style: normal;
+		}
+
+  	/* Progress bar container */
+    .progress-container {
+      width: 100%;
+      background: #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1rem 0;
+      height: 20px;
+    }
+
+    /* Progress fill */
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4cafef;
+      transition: width 0.7s ease;
+    }
+
+    /* Percentage text */
+    .progress-text {
+      margin: 0.5rem 0;
+      text-align: right;
+      font-size: 14px;
+      color: #aaa;
+      font-weight: 800;
+    }
+
     body {
       font-family: sans-serif;
       max-width: 900px;
@@ -20,11 +57,23 @@
       background-color: #121212;
       color: #e0e0e0;
     }
-    h1, h2, h3 {
+
+    h1 {
+    	margin: 0;
+    }
+
+    h2, h3 {
       color: #ffffff;
       background: #1e1e1e;
-	  border-radius: 1rem;
-	  padding: 1rem;
+		  border-radius: 5px;
+		  padding: 0.4rem 1rem;
+    }
+
+    .card {
+      background: #101011ef;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
     }
 	
 	  /* Hierarchy lines for nested lists */
@@ -54,6 +103,11 @@
       padding-left: 24px; /* indent for sublists */
     }
 
+    ul, ul ul, ul ul ul {
+		  font-size: 1rem;      /* lock consistent size */
+		  line-height: 1.6;     /* consistent spacing */
+		}
+
         /* Remove default bullets */
     ul {
       list-style: none;
@@ -64,7 +118,6 @@
     /* Each task item has a background card */
     li {
       position: relative;
-      background: #1e1e1e;
       border-radius: 10px;
       padding: 0.1rem 0.81rem;
       margin: 0rem 0rem;
@@ -95,33 +148,76 @@
       border-color: #4cafef;
     }
 
-	li input[type="checkbox"]:checked + span {
-	  text-decoration: line-through;
-	  color: #888; /* optional: dim the text */
-	}
+		li input[type="checkbox"]:checked + span {
+		  text-decoration: line-through;
+		  color: #888; /* optional: dim the text */
+		}
 
     /* Checkmark */
     input[type="checkbox"]:checked::after {
       content: "✔";
       color: #000;
-      font-size: 14px;
+      font-size: 1rem;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -55%);
     }
+
+    li {
+
+      font-size: 1rem;
+    }
+
+
+		@keyframes move {
+		  to {
+		    transform: translate(0, -3rem) scale(1.2);
+		  }
+		}
+
+    .background {
+    	position: fixed;
+    	z-index: -10;
+    	width: 100%;
+    	height: 100%;
+    	left: 0;
+    	top:0 ;
+    	object-fit: cover;
+    	filter: blur(5px);
+    	transform: scale(1.2);
+    	opacity: 0.05;
+
+		  animation: move 1s linear infinite;
+		  animation-play-state: paused;
+		  animation-delay: calc(var(--scroll) * -0.9s);
+    }
+
   </style>
 </head>
 <body>
-  <div id="content"></div>
+
+	<img class="background" src="bg.jpg" />
+
+
+	<div class="card">
+		<h1>Hedgerows 2 Release Scope</h1>
+	  <div class="progress-container">
+	    <div class="progress-bar"></div>
+	  </div>
+	  <div class="progress-text">0%</div>
+	</div>
+
+	<div class="card">
+	 <div id="content" />
+	</div>
 
   <!-- Marked.js (Markdown parser) -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const markdown = `
-# The HR2 List
 
-- [ ] **MENU**
+- ### MENU
 	- [ ] PLAY
 		- [x] Deploy button
 		- [x] Class buttons
@@ -140,7 +236,7 @@
 			- [x] Crowns
 			- [x] Player rank
 			- [x] Player XP
-	- [ ] DEPLOY
+	- [x] DEPLOY
 		- [x] Vehicle
 			- [x] Jeep
 			- [x] Halftrack
@@ -153,7 +249,7 @@
 		- [ ] Paratrooper
 	- [ ] LOADOUT
 		- [x] Intermediate screen
-		- [ ] CLASS
+		- [x] CLASS
 			- [x] Class selector
 			- [x] Gun slot selector
 			- [x] Class rank
@@ -182,7 +278,7 @@
 	- [ ] INVENTORY
 		- [x] Dynamic categories
 		- [ ] Player cosmetics
-	- [ ] STORE
+	- [x] STORE
 		- [x] Set list
 		- [x] 6 Featured items
 		- [x] Buy crowns
@@ -200,7 +296,7 @@
 		- [x] Assignment Description 
 		- [x] View Assignment Reward
 
-- [ ] **GAMEPLAY**
+- ### GAMEPLAY
 	- [ ] PLAYER
 		- [x] Server Inventory management
 		- [ ] Projectiles
@@ -376,7 +472,7 @@
 			- [x] Timer
 		- [ ] Fix loading next map
 
-- [ ] **CONTENT**
+- ### CONTENT
 	- [ ] Infantry
 		- [x] Guns
 			- [ ] Attachments
@@ -425,6 +521,20 @@
 	  text.replaceWith(span);
 	});
 
+	function updateProgress() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+    const percent = checkboxes.length ? Math.round((checked / checkboxes.length) * 100) : 0;
+
+    document.querySelector('.progress-bar').style.width = percent + '%';
+    document.querySelector('.progress-text').textContent = "Hedgerows 2 is " + percent + '% complete (' + checked + " / " + checkboxes.length + " total tasks) ";
+  }
+
+  // Initialize on page load
+  updateProgress();
+	window.addEventListener('scroll', () => {
+	  document.body.style.setProperty('--scroll', window.pageYOffset / (document.body.offsetHeight - window.innerHeight));
+	}, false);
   </script>
 </body>
 </html>

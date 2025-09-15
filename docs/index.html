@@ -1,1 +1,422 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>THE HR2 LIST OF DEATH</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 900px;
+      margin: 2rem auto;
+      line-height: 1.6;
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    h1, h2, h3 {
+      color: #ffffff;
+      background: #1e1e1e;
+	  border-radius: 1rem;
+	  padding: 1rem;
+    }
+	
+	  /* Hierarchy lines for nested lists */
+    ul ul li::before {
+      content: "";
+      position: absolute;
+      left: -16px; /* vertical line */
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #333;
+      border-radius: 1px;
+    }
+
+    ul ul li::after {
+      content: "";
+      position: absolute;
+      left: -16px;
+      top: 1rem; /* horizontal connector to parent */
+      width: 16px;
+      height: 2px;
+      background: #333;
+      border-radius: 1px;
+    }
+
+    ul ul {
+      padding-left: 24px; /* indent for sublists */
+    }
+
+        /* Remove default bullets */
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    /* Each task item has a background card */
+    li {
+      position: relative;
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 0.1rem 0.81rem;
+      margin: 0rem 0rem;
+    }
+
+
+    /* Hide default checkboxes */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #555;
+      border-radius: 6px;
+      margin-right: 0.8rem;
+      cursor: pointer;
+      vertical-align: middle;
+      transition: all 0.2s ease;
+      background-color: #1e1e1e;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* Checked state */
+    input[type="checkbox"]:checked {
+      background-color: #4cafef;
+      border-color: #4cafef;
+    }
+
+	li input[type="checkbox"]:checked + span {
+	  text-decoration: line-through;
+	  color: #888; /* optional: dim the text */
+	}
+
+    /* Checkmark */
+    input[type="checkbox"]:checked::after {
+      content: "✔";
+      color: #000;
+      font-size: 14px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+    }
+  </style>
+</head>
+<body>
+  <div id="content"></div>
+
+  <!-- Marked.js (Markdown parser) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const markdown = `
+# The HR2 List
+
+- [ ] **MENU**
+	- [ ] PLAY
+		- [x] Deploy button
+		- [x] Class buttons
+		- [x] Loadout shortcut buttons
+		- [x] SQUAD
+			- [x] Squad drawer
+			- [x] Squad list
+		- [x] GAMEMODE
+			- [x] Game timer
+			- [x] Team flag
+		- [ ] ASSIGNMENTS
+			- [x] Assignment button
+			- [ ] Assignment A B C D shortcut viewers
+		- [x] STATS
+			- [x] Warbonds
+			- [x] Crowns
+			- [x] Player rank
+			- [x] Player XP
+	- [ ] DEPLOY
+		- [x] Vehicle
+			- [x] Jeep
+			- [x] Halftrack
+			- [x] Tank Light
+			- [x] Tank Medium
+			- [x] Tank Heavy
+			- [x] Vehicle score
+		- [x] Infantry
+		- [x] Capture point
+		- [ ] Paratrooper
+	- [ ] LOADOUT
+		- [x] Intermediate screen
+		- [ ] CLASS
+			- [x] Class selector
+			- [x] Gun slot selector
+			- [x] Class rank
+			- [x] Attachments
+				- [x] Unlocking attachments via weapon score
+				- [x] Buying attachments
+			- [x] Design
+				- [ ] Decals
+					- [x] System
+					- [ ] Design
+				- [ ] Camos
+					- [x] System
+					- [ ] Design
+				- [ ] Charms
+					- [x] System
+					- [ ] Design
+		- [ ] VEHICLES
+			- [ ] Selecting Light, Medium, Heavy tank
+			- [ ] Tank stat modification
+				- [x] System
+				- [ ] Design
+		- [x] SOLDIER
+			- [x] Skin tone
+			- [x] Cosmetics
+			- [x] Cosmetic Equip
+	- [ ] INVENTORY
+		- [x] Dynamic categories
+		- [ ] Player cosmetics
+	- [ ] STORE
+		- [x] Set list
+		- [x] 6 Featured items
+		- [x] Buy crowns
+		- [x] Convert warbonds
+		- [x] Item viewer
+			- [x] Clothing
+			- [ ] Charms
+			- [ ] Decals
+			- [ ] Camos
+		- [ ] Dynamic clothing icons
+	- [x] ASSIGNMENTS PAGE
+		- [x] Dynamic assignment adding
+		- [x] Remove assignment
+		- [x] Assignment progress
+		- [x] Assignment Description 
+		- [x] View Assignment Reward
+
+- [ ] **GAMEPLAY**
+	- [ ] PLAYER
+		- [x] Server Inventory management
+		- [ ] Projectiles
+			- [x] Hit explosions
+			- [x] Directional suppression
+				- [ ] Re-import suppression sounds to work with restrictions
+		- [x] Explosions
+			- [x] Concussion
+		- [x] Fire tick damage
+			- [x] Fire camera effect
+		- [x] Bleeding
+		- [x] Bandaging
+				- [ ] Bandage cancelling
+		- [x] Weapons
+			- [x] Items classes
+				- [x] Guns
+					- [x] Projectile system
+					- [x] Alt Fire
+					- [x] Flare
+						- [x] Signal
+						- [x] Smoke
+						- [ ] Heat
+						- [ ] HE
+						- [ ] Frag
+				- [x] Grenades
+					- [x] Grenade system
+					- [x] Fire
+					- [x] Smoke
+					- [x] Concussion
+					- [x] Frag
+				- [x] Melee
+					- [x] Takedowns / Backstab
+				- [x] Equipment
+					- [x] Emplacement system
+					- [x] Squad leader equipment
+					- [x] Throw bags at players
+		- [x] Status effects
+			- [x] Concussion / Trauma
+			- [x] Bleeding
+			- [x] Fire
+			- [x] Breath
+				- [x] Breath down on holding aim steady / concentration
+		- [ ] Character
+			- [x] Controller
+				- [x] Old controller
+				- [x] New controller performant
+					- [x] Sphere casting
+					- [x] Stances
+					- [x] Decoupled Input
+			- [x] Parallel Performant Characters
+				- [x] Animations
+					- [x] RifleWalk
+					- [x] Running
+					- [x] Sitting
+						- [x] Sit in Vehicle w/ Turning
+					- [x] Crouch
+					- [x] Prone
+					- [x] Fake Slide
+					- [x] Supine
+					- [x] Animated Ragdoll / Downed state
+					- [x] Physics Ragdoll
+				- [x] State 
+					- [x] Fire weapon
+					- [x] Takedown dual animation system
+	- [ ] EMBARKABLES
+		- [x] Embarking
+			- [x] Force Embarking (eg. Spawning)
+		- [x] Disembarking
+			- [x] Force Disembarking (eg. Death)
+		- [ ] Types
+			- [x] Jeep
+				- [ ] Restrict to secondary weapon if driver
+			- [x] Tank
+				- [x] Restrict all weapons
+				- [x] Custom over-the shoulder Camera
+			- [x] Halftrack
+				- [ ] Restrict all weapons
+		- [x] Spawning
+			- [x] Auto spawning on maps
+			- [x] Player can spawn on vehicle
+				- [ ] Fix "unspawnable" flag for auto spawning vehicles
+		- [x] Destruction
+		- [x] Projectile handling
+		- [x] Explosions
+		- [x] Damage
+			- [x] Detailed damage modelling for anti-tank damage
+			- [x] Fix team damage
+				- [x] Hit sounds
+					- [ ] Hit sound variation
+		- [ ] Restriction
+			- [x] Vehicle tracking system
+			- [ ] Robust tracking refactor
+				- [ ] Restrict tanks
+				- [ ] Restrict halftracks
+	- [ ] UI
+		- [x] Bleeding
+		- [x] Compass
+		- [x] Death Screen
+			- [x] Return to menu view
+		- [x] Downed
+		- [x] Gamemode Feedback
+			- [x] Capture point
+			- [x] POI Notifications
+			- [x] Game bar
+				- [x] Ratio
+				- [x] Territory
+				- [x] DDAY
+		- [x] Game notifications
+		- [x] Breath
+		- [x] Interactable UI
+		- [x] Inventory
+		- [x] Kill Feed
+			- [x] Notification
+		- [x] Out of bounds
+		- [x] XP Feed
+		- [x] Radial selector
+		- [x] Vehicle GUI
+			- [x] Jeep
+			- [x] Tank
+			- [x] Halftrack
+			- [x] Bren Carrier
+		- [x] Vehicle Mending
+			- [x] Highlighting
+		- [x] Bipodding
+		- [x] Ammo
+			- [x] Alt Ammo
+		- [ ] Flare UI
+			- [x] Placeholder code
+			- [ ] Redesign
+	- [ ] AUDIO
+		- [x] Directional audio
+		- [x] Gunshots
+			- [x] Looping
+			- [x] Far away shot system - "Sound Profiles"
+				- [x] Single fire
+				- [ ] Looping sounds
+		- [x] Mass sound grouping
+			- [x] In-engine sound mixing
+	- [x] INTERACTABLES
+		- [x] Doors
+		- [x] Custom Gamemode Points
+		- [x] Equipment Emplacements
+			- [x] Health
+			- [x] Damage from other team
+		- [ ] Dropped Loadouts
+	- [x] DESTRUCTION
+		- [x] Glass
+			- [x] Glass shatter
+			- [ ] Performant Glass Shatter
+		- [x] Prop
+		- [x] Terrain
+		- [x] Equipment Emplacements
+		- [x] Destruction from:
+			- [x] Explosions
+			- [x] Vehicles
+	- [ ] SQUADS
+		- [x] Join squad
+		- [x] Leave squad
+		- [x] Automatic squad assignment
+		- [ ] Show squad health / state (performant)
+		- [ ] Show squad classes (performant)
+	- [ ] ROUNDS
+		- [x] End Round
+			- [x] Progress
+				- [x] Weapon progress
+				- [x] Ranking progress
+				- [ ] Ending card
+		- [ ] Best Players
+			- [x] Players
+				- [x] Walk-on animation
+			- [ ] Best stats UI
+		- [x] Map Vote
+			- [x] Timer
+		- [ ] Fix loading next map
+
+- [ ] **CONTENT**
+	- [ ] Infantry
+		- [x] Guns
+			- [ ] Attachments
+			- [ ] Decals
+			- [ ] Charms
+			- [x] Camos
+			- [x] Release
+				- [x] the other 20-something guns
+				- [ ] MG34 import
+			- [ ] French Expansion
+		- [x] Equipment
+		- [x] Grenade
+		- [x] Melee
+	- [ ] Vehicles
+		- [x] Tanks
+		- [x] Jeeps
+		- [x] People-carriers
+	- [ ] Maps
+		- [x] DDAY
+			- [x] Gamemode
+			- [ ] Gamemode rework
+			- [ ] Finalized
+		- [x] NARVIK
+			- [x] Gamemode
+			- [x] Finalized
+		- [ ] VILLERS BOCAGE
+			- [ ] Gamemode
+			- [ ] Finalized
+		- [ ] EBEN EMAEL
+			- [ ] Gamemode
+			- [ ] Finalized
+	- [ ] Shop
+		- [x] Packages
+		- [x] Featured Items
+		- [x] Robux Purchases
+`;
+
+    // Render markdown
+    document.getElementById('content').innerHTML = marked.parse(markdown);
+
+	document.querySelectorAll("li").forEach(li => {
+	  const checkbox = li.querySelector("input[type='checkbox']");
+	  const text = li.childNodes[1]; // the text node
+	  const span = document.createElement("span");
+	  span.textContent = text.textContent;
+	  text.replaceWith(span);
+	});
+
+  </script>
+</body>
+</html>

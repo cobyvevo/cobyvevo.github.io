@@ -40,6 +40,13 @@
       transition: width 0.7s ease;
     }
 
+	.progress-bar-content {
+		height: 100%;
+		width: 0%;
+		background: #4cafef;
+		transition: width 0.7s ease;
+	}
+
     /* Percentage text */
     .progress-text {
       margin: 0.5rem 0;
@@ -48,6 +55,13 @@
       color: #aaa;
       font-weight: 800;
     }
+	.progress-text-content {
+		margin: 0.5rem 0;
+		text-align: right;
+		font-size: 14px;
+		color: #aaa;
+		font-weight: 800;
+	}
 
     body {
       font-family: sans-serif;
@@ -202,11 +216,16 @@
 
 	<div class="card">
 		<h1>Hedgerows 2 Release Scope</h1>
-	  <div class="progress-container">
-	    <div class="progress-bar"></div>
-	  </div>
-	  <div class="progress-text">0%</div>
-	  <div style="font-size: 0.7rem; font-weight: 600; color: #888888">(This progress is of the checkboxes and not accurate to the completion of the project)</div>
+		<div class="progress-container">
+			<div class="progress-bar"></div>
+		</div>
+		<div class="progress-text">0%</div>
+		
+		<div class="progress-container">
+			<div class="progress-bar-content"></div>
+		</div>
+		<div class="progress-text-content">0%</div>
+		<div style="font-size: 0.7rem; font-weight: 600; color: #888888">(This progress is of the checkboxes and not accurate to the completion of the project)</div>
 	</div>
 
 	<div class="card">
@@ -219,7 +238,7 @@
     const markdown = `
 
 - ### MENU
-	- [ ] PLAY
+	- [x] PLAY
 		- [x] Deploy button
 		- [x] Class buttons
 		- [x] Loadout shortcut buttons
@@ -248,7 +267,7 @@
 		- [x] Infantry
 		- [x] Capture point
 		- [ ] Paratrooper
-	- [ ] LOADOUT
+	- [x] LOADOUT
 		- [x] Intermediate screen
 		- [x] CLASS
 			- [x] Class selector
@@ -267,11 +286,9 @@
 				- [x] Charms
 					- [x] System
 					- [x] Design
-		- [ ] VEHICLES
-			- [ ] Selecting Light, Medium, Heavy tank
-			- [ ] Tank stat modification
+		- [ ] VEHICLE SELECTION
+			- [x] Tank stat modification (for update after release)
 				- [x] System
-				- [ ] Design
 		- [x] SOLDIER
 			- [x] Skin tone
 			- [x] Cosmetics
@@ -307,7 +324,7 @@
 			- [x] Fire camera effect
 		- [x] Bleeding
 		- [x] Bandaging
-				- [ ] Bandage cancelling
+				- [ ] Bandage robustness / fixes
 		- [x] Weapons
 			- [x] Items classes
 				- [x] Guns
@@ -337,7 +354,7 @@
 			- [x] Fire
 			- [x] Breath
 				- [x] Breath down on holding aim steady / concentration
-		- [ ] Character
+		- [x] Character
 			- [x] Controller
 				- [x] Old controller
 				- [x] New controller performant
@@ -364,6 +381,7 @@
 			- [x] Force Embarking (eg. Spawning)
 		- [x] Disembarking
 			- [x] Force Disembarking (eg. Death)
+		- [x] Stationaries
 		- [ ] Types
 			- [x] Jeep
 				- [ ] Restrict to secondary weapon if driver
@@ -389,7 +407,7 @@
 			- [ ] Robust tracking refactor
 				- [ ] Restrict tanks
 				- [ ] Restrict halftracks
-	- [ ] UI
+	- [x] UI
 		- [x] Bleeding
 		- [x] Compass
 		- [x] Death Screen
@@ -421,11 +439,10 @@
 		- [x] Bipodding
 		- [x] Ammo
 			- [x] Alt Ammo
-		- [ ] Flare UI
+		- [ ] Flare UI implementation
 			- [x] Placeholder code
 			- [x] Redesign
-			- [ ] Implement
-	- [ ] AUDIO
+	- [x] AUDIO
 		- [x] Directional audio
 		- [x] Gunshots
 			- [x] Looping
@@ -440,10 +457,8 @@
 		- [x] Equipment Emplacements
 			- [x] Health
 			- [x] Damage from other team
-		- Dropped Loadouts (unsure of)
 	- [x] DESTRUCTION
 		- [x] Glass
-			- [x] Glass shatter
 			- [ ] Performant Glass Shatter
 		- [x] Prop
 		- [x] Terrain
@@ -470,7 +485,8 @@
 		- [x] Map Vote
 			- [x] Timer
 		- [x] Fix loading next map
-
+`;
+	const markdowncontent = `
 - ### CONTENT
 	- [ ] Infantry
 		- [x] Guns
@@ -479,11 +495,10 @@
 			- [ ] Charms
 			- [x] Camos
 			- [x] Release
-			- [ ] French Expansion
 		- [x] Equipment
 		- [x] Grenade
 		- [x] Melee
-	- [ ] Vehicles
+	- [x] Vehicles
 		- [x] Tanks
 		- [x] Jeeps
 		- [x] People-carriers
@@ -507,9 +522,8 @@
 		- [x] Robux Purchases
 		- [ ] Define item sets
 `;
-
     // Render markdown
-    document.getElementById('content').innerHTML = marked.parse(markdown);
+    document.getElementById('content').innerHTML = marked.parse(markdown + markdowncontent);
 
 	document.querySelectorAll("li").forEach(li => {
 	  const checkbox = li.querySelector("input[type='checkbox']");
@@ -519,14 +533,37 @@
 	  text.replaceWith(span);
 	});
 
-	function updateProgress() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
-    const percent = checkboxes.length ? Math.round((checked / checkboxes.length) * 100) : 0;
+	function countCheckboxes(markdown) {
+		// Create a new RegExp each time (safe)
+		const checkboxRegex = /- \[( |x|X)\]/g;
+		const matches = markdown.match(checkboxRegex);
 
-    document.querySelector('.progress-bar').style.width = percent + '%';
-    document.querySelector('.progress-text').textContent =  percent + '% (' + checked + " / " + checkboxes.length + " total tasks) ";
-  }
+		if (!matches) {
+			return { checked: 0, total: 0 };
+		}
+
+		const total = matches.length;
+		const checked = matches.filter(box => /- \[[xX]\]/.test(box)).length;
+
+		return { checked, total };
+	}
+
+	
+	function updateProgress() {
+		const master = countCheckboxes(markdown);
+		const content = countCheckboxes(markdowncontent);
+		
+		var percent = Math.ceil((master.checked/master.total)*100)
+	
+		document.querySelector('.progress-bar').style.width = percent + '%';
+		document.querySelector('.progress-text').textContent =  percent + '% (' + master.checked + " / " + master.total + " total tasks) ";
+		
+		
+		var percentcontent = Math.ceil((content.checked/content.total)*100)
+
+		document.querySelector('.progress-bar-content').style.width = percentcontent + '%';
+		document.querySelector('.progress-text-content').textContent =  percentcontent + '% (' + content.checked + " / " + content.total + " total tasks) ";
+	}
 
   // Initialize on page load
   updateProgress();
